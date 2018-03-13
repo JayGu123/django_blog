@@ -1,0 +1,17 @@
+{%  extends 'myApp/base.html' %}
+{% block content %}
+<div class="date">
+    {% if post.publishedtime %}
+    {{post.publishedtime}}
+    {% else %}
+    <a class="btn btn-default" href="{% url 'myapp:post_publish' pk=post.pk %}">Publish</a>
+    {% endif %}
+</div>
+<a class="btn btn=default" href="{% url 'myapp:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+<a class="btn btn-default" href="{% url 'myapp:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+<h1>
+    {{post.title}}
+</h1>
+<p>{{post.text|linebreaks}}</p>
+
+{% endblock %}

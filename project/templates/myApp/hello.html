@@ -4,12 +4,13 @@
         <div>
             <h1>
                 <div class="post">
-                    <h1><a href="">{{ post.title }}</a></h1>
-                    <p>published: {{ post.published_date }}</p>
-                    <p>{{ post.text|linebreaks }}</p>
+                    {% if post.publishedtime %}
+                    <h1><a href="{% url 'myapp:post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+                    <h2><p>published: {{ post.publishedtime }}</p></h2>
+                    <h2><p>{{ post.text|truncatechars:20 }}</p></h2>
+                    {% endif %}
                 </div>
-            </h1>>
-        </div>>
-
+            </h1>
+        </div>
     {% endfor %}
 {% endblock %}
