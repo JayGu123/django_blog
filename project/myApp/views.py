@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models.aggregates import Count
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import POST
 from .form import postForm
@@ -12,7 +14,7 @@ def hello(request):
 def post_detail(request, pk):
     post = get_object_or_404(POST, pk=pk)
     return render(request, 'myApp/post_detail.html', {'post':post})
-
+@login_required
 def post_new(request):
     if request.method == 'POST':
         form = postForm(request.POST)
@@ -24,7 +26,7 @@ def post_new(request):
     else:
         form = postForm()
     return render(request, 'myApp/post_new.html', {'form':form})
-
+@login_required
 def post_edit(request, pk):
     post = get_object_or_404(POST, pk=pk)
     if request.method == "POST":
@@ -41,7 +43,7 @@ def post_edit(request, pk):
 def post_draft_list(request):
     posts = POST.objects.all()
     return render(request, 'myApp/post_draft_list.html', {'posts': posts})
-
+@login_required
 def post_publish(request,pk):
     post = get_object_or_404(POST, pk=pk)
     post.publish()
@@ -52,5 +54,7 @@ def post_remove(request, pk):
     post.delete()
     return redirect('/')
 
-def post_list(request):
-    postsAll = POST.objects.filter(publishedtime__isnull=False).order_by('publishedtime')
+#def post_list(request):
+    #postsAll = POST.objects.annotate(num_comments=Count('comment')).prefetch_related('category').prefetch_related('tags').filter(publishedtime__isnull=False).order_by('publishedtime')
+    #for p in postsAll:
+        #p.click = cache_manager.get_click(p)

@@ -15,9 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from django.contrib.auth import views
+import haystack
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('myApp.urls',namespace='myapp')),
+    re_path(r'^accounts/login/$', views.login, name='login'),
+    re_path(r'^accounts/logout/$', views.logout, name='logout', ),
+    re_path(r'^searh/', include('haystack.urls')),
+    re_path(r'', include('myApp.urls',namespace='myapp')),
+
 ]

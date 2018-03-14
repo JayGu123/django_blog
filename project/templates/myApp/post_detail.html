@@ -4,11 +4,15 @@
     {% if post.publishedtime %}
     {{post.publishedtime}}
     {% else %}
-    <a class="btn btn-default" href="{% url 'myapp:post_publish' pk=post.pk %}">Publish</a>
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'myapp:post_publish' pk=post.pk %}">Publish</a>
+        {% endif %}
     {% endif %}
 </div>
-<a class="btn btn=default" href="{% url 'myapp:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-<a class="btn btn-default" href="{% url 'myapp:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+{% if uer.is_authenticated %}
+    <a class="btn btn=default" href="{% url 'myapp:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a class="btn btn-default" href="{% url 'myapp:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+{% endif %}
 <h1>
     {{post.title}}
 </h1>

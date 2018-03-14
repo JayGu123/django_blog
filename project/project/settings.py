@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myApp',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,12 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static'),
 ]
+LOGIN_REDIRECT_URL = '/'
+HAYSTACK_CONNECTIONS = {
+    'default':{
+        'ENGINE':'myApp.whoosh_cn_backend.WhooshEngine',
+        'PATH':os.path.join(BASE_DIR,'whoosh_index'),
+    }
+}
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
