@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'n5w75p2c@e5o6hhhuk+zsl_@gh1xu3s9dvdg6&dg^mnhduy6=('
+SECRET_KEY = 'rz-dnr=7akcs59=mks$684ou7cd^veh*tajlf$ft@ptc_(ubp^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,15 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myApp',
-    'haystack',
+    'blog',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -69,7 +68,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'project.wsgi.application'
 
 
@@ -79,11 +77,11 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': 'NbAgQ2017',
-        'PORT': 3306,
-        'HOST': 'localhost',
+        'NAME':'blog',
+        'USER':'root',
+        'PASSWORD':'NbAgQ2017',
+        'PORT':3306,
+        'HOST':'localhost',
     }
 }
 
@@ -126,14 +124,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR,'static')
 ]
-LOGIN_REDIRECT_URL = '/'
-HAYSTACK_CONNECTIONS = {
-    'default':{
-        'ENGINE':'myApp.whoosh_cn_backend.WhooshEngine',
-        'PATH':os.path.join(BASE_DIR,'whoosh_index'),
-    }
-}
-
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
