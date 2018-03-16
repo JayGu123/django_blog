@@ -9,13 +9,21 @@
         {% endif %}
     {% endif %}
 </div>
-{% if uer.is_authenticated %}
-    <a class="btn btn=default" href="{% url 'myapp:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-    <a class="btn btn-default" href="{% url 'myapp:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+{% if user.is_authenticated %}
+    {% if user == post.auth %}
+        <a class="btn btn=default" href="{% url 'myapp:post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default" href="{% url 'myapp:post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+    {% endif %}
 {% endif %}
 <h1>
     {{post.title}}
 </h1>
 <p>{{post.text|linebreaks}}</p>
+<div class="comment">
+    <form method="post" class="comment-form">
+        {{comment.as_p}}
+        <button type="submit" class="save btn btn-default">提交</button>
+    </form>
+</div>
 
 {% endblock %}

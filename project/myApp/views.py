@@ -3,8 +3,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models.aggregates import Count
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .models import POST
-from .form import postForm
+from haystack.forms import SearchForm
+from .models import *
+from .form import *
 # Create your views here.
 
 def hello(request):
@@ -53,6 +54,12 @@ def post_remove(request, pk):
     post = get_object_or_404(POST,pk=pk)
     post.delete()
     return redirect('/')
+
+def full_search(request):
+    keywords = request.GET['q']
+    sform = SearchForm(request.GET)
+    posts = sform.search()
+    return render(request, 'myApp/post_search_list.html', {'posts':posts, 'list_header':'关键字\'{}\'搜索结果'.format(keywords)})
 
 #def post_list(request):
     #postsAll = POST.objects.annotate(num_comments=Count('comment')).prefetch_related('category').prefetch_related('tags').filter(publishedtime__isnull=False).order_by('publishedtime')

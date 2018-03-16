@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^accounts/login/$', views.login, name='login'),
     re_path(r'^accounts/logout/$', views.logout, name='logout', ),
-    re_path(r'^searh/', include('haystack.urls')),
+    #re_path(r'^searh/', include(haystack.urls), name='search'),
     re_path(r'', include('myApp.urls',namespace='myapp')),
 
 ]

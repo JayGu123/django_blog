@@ -10,6 +10,16 @@
 </head>
 <body>
     <div class="page-header">
+        <div id="searchbox">
+            <form action="{% url 'myapp:post_search_list' %}" method="get">
+                <div class="content">
+                    <label>
+                        <input type="text" class="textfield searchtip" name="q" size="24" value=""/>
+                    </label>
+                    <input type="submit" class="button" value="搜索"/>
+                </div>
+            </form>
+        </div>
     {% if user.is_authenticated %}
         <p class="top-menu">hello, {{user.username}}<small>&nbsp;<a href="{% url 'logout' %}?next={{request.path}}">Log out</a></small></p>
         <a href="{% url 'myapp:post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>

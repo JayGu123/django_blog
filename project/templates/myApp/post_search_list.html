@@ -1,0 +1,16 @@
+{% extends 'myApp/base.html' %}
+{% block content %}
+<div class="search-title">
+    {{list_header}}
+</div>
+<hr>
+<div class="content">
+    {% if posts %}
+        {% for post in posts %}
+        <h1>{{post.title}}</h1>
+        {% endfor %}
+    {% else %}
+        <h1>对不起，找不到你想搜索的信息</h1>
+    {% endif %}
+</div>
+{% endblock %}
