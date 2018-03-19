@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 # Create your models here.
 class Category(models.Model):
     name = models.CharField('分类', max_length=20)
@@ -31,5 +32,7 @@ class POST(models.Model):
         db_table = 'post'
         verbose_name = '文章'
         verbose_name_plural = verbose_name
+        ordering = ['created_time']
     def __str__(self):
         return self.title
+
