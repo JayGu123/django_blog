@@ -27,6 +27,7 @@ class POST(models.Model):
     created_time = models.DateTimeField('创建日期', auto_now_add=True)
     category = models.ForeignKey(Category, on_delete='descase')
     tag = models.ManyToManyField(Tag)
+    views = models.PositiveIntegerField('浏览量', default=0)
     author = models.ForeignKey(User, on_delete='descase')
     class Meta:
         db_table = 'post'
@@ -35,4 +36,7 @@ class POST(models.Model):
         ordering = ['created_time']
     def __str__(self):
         return self.title
+    def increase_views(self):
+        self.views+=1
+        self.save(update_fields=['views'])
 

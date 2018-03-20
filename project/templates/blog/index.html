@@ -10,7 +10,7 @@
                             <span class="post-date"><a href="#"><time class="entry-date" datetime="{{ post.created_time }}">{{ post.created_time }}</time></a></span>
                             <span class="post-author"><a href="#">{{ post.author }}</a></span>
                             <span class="comments-link"><a></a></span>
-                            <span class="views-count"><a></a></span>
+                            <span class="views-count"><a>{{ post.views }}</a></span>
                         </div>
                         <div class="entry-content clearfix">
                             <p>{{ post.content|truncatechars:20 }}</p>
