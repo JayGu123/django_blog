@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <article class="post post-{{ post.pk }}">
+    <article class="post post-{{ post.pk }}" xmlns="http://www.w3.org/1999/html">
         <header class="entry-header">
             <h1 class="entry-title">{{ post.title }}</h1>
             <div class="entry-meta">
@@ -11,6 +11,13 @@
                 <span class="views-count"><a href="#">{{ post.views }}</a></span>
             </div>
         </header>
+        <div class="widget widget-tag-cloud">
+        <ul>标签：
+            {% for tag in post.tag.all %}
+                <li><a href="{% url 'blog:tags' pk=tag.pk %}">{{ tag.name }}</a></li>
+            {% endfor %}
+        </ul>
+        </div>
         <div class="entry-content clearfix">
             {{ post.content|safe }}
         </div>
