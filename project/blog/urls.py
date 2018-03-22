@@ -11,4 +11,5 @@ urlpatterns = [
     re_path(r'^categories/(?P<pk>\d+)/$', views.CategoryView.as_view(), name='categories'),
     re_path(r'tags/(?P<pk>\d+)/$', views.TagView.as_view(), name='tags'),
     re_path(r'all/rss/$', AllowPostsRss(), name='rss'),
+    re_path(r'^search/$', views.search, name='search'),
 ]

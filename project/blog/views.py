@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
+from django.db.models import Q
 from comments.forms import CommentForm
 from .models import *
 import markdown
@@ -79,7 +80,7 @@ class PostDetailView(DetailView):
                                          extensions = [
                                              'markdown.extensions.extra',
                                              'markdown.extensions.codehilite',
-                                             'markdown.extensions,toc',
+                                             'markdown.extensions.toc',
                                          ])
         return post
     def get_context_data(self, **kwargs):
@@ -96,10 +97,10 @@ def detail(request, pk):
     post = get_object_or_404(POST, pk=pk)
     post.increase_views()
     post.content = markdown.markdown(post.content,
-                                     extensions=[
+                                     extensions = [
                                          'markdown.extensions.extra',
                                          'markdown.extensions.codehilite',
-                                         'markdown.extensions.toc'
+                                         'markdown.extensions.toc',
                                      ])
     form = CommentForm()
     comment_list = post.comment_set.all()
@@ -135,3 +136,30 @@ class TagView(IndexView):
     def get_queryset(self):
         tag = get_object_or_404(Tag, pk=self.kwargs.get('pk'))
         return super(TagView, self).get_queryset().filter(tag=tag)
+
+class SearchView(IndexView):
+    model = POST
+    template_name = 'blog/index.html'
+    context_object_name = 'posts'
+    def get_context_data(self):
+        context = super(SearchView, self).get_context_data()
+        error_message = ''
+        if not q:
+            error_message = '请输入关键字'
+        data = {
+            'error_message':error_message,
+        }
+        context.update(data)
+        return context
+    def get_queryset(self):
+        q = self.kwargs.get('q')
+        return super(SearchView,self).get_queryset().filter(Q(title__icontains=q)|Q(content__icontais=q))
+
+def search(request):
+    q = request.GET.get('q')
+    error_message = ''
+    if not q:
+        error_message = '请输入关键字'
+        return render(request, 'blog/index.html', {'error_message':error_message})
+    posts = POST.objects.filter(Q(title__icontains=q)|Q(content__icontains=q))
+    return render(request, 'blog/index.html', {'posts':posts, 'error_message':error_message})

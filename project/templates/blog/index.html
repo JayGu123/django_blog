@@ -1,5 +1,8 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+{% if error_message %}
+    <p>{{ error_message }}</p>
+{% endif %}
 {% for post in posts %}
                     <article class="post post-{{ post.pk }}">
                         <h1 class="entry-title">
